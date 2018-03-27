@@ -14,8 +14,10 @@ def load_data():
 # приведение входного изображения к стандартному виду
 def standardize_input(image):
     standard_im = np.copy(image)
+
     ## TODO: Выполните необходимые преобразования изображения для стандартизации (обрезка, поворот, изменение размера)
-    standard_im = cv2.resize(standard_im, (32, 32))
+
+    standard_im = cv2.resize(standard_im, (64, 64))
     return standard_im
 
 # Перекодировка из текстового названия в массив данных
@@ -68,11 +70,29 @@ def standardize(image_list):
 # совокупность функций классификации
 def predict_label(rgb_image):
     ## TODO: обьедините ваши функции классификации в одну программу или напишите код внутри этой функции
-    ## Пример:
-    # predicted_label=[1, 0, 0, 0, 0, 0, 0, 0]
 
     predicted_label = []
 
+    ## Пример:
+    # predicted_label=[1, 0, 0, 0, 0, 0, 0, 0]
+    import traffic_sign_recognition as tsr
+    pedistrain = cv2.resize(cv2.imread("pedistrain.png"), (64, 64))
+    no_drive = cv2.resize(cv2.imread("noDrive.png"), (64, 64))
+
+
+    examples_arr = [pedistrain,no_drive]
+    traffic_dict = {
+        "No_sign": [0, 0, 0, 0, 0, 0, 0, 0],
+        0: [1, 0, 0, 0, 0, 0, 0, 0],
+        1: [0, 1, 0, 0, 0, 0, 0, 0],
+        2: [0, 0, 1, 0, 0, 0, 0, 0],
+        3: [0, 0, 0, 1, 0, 0, 0, 0],
+        4: [0, 0, 0, 0, 1, 0, 0, 0],
+        5: [0, 0, 0, 0, 0, 1, 0, 0],
+        6: [0, 0, 0, 0, 0, 0, 1, 0],
+        7: [0, 0, 0, 0, 0, 0, 0, 1]
+    }
+    predicted_label=tsr.tsr_recognition(rgb_image,examples_arr,traffic_dict)
     return predicted_label
 
 
