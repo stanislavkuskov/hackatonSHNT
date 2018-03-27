@@ -53,7 +53,6 @@ def tsr_detection(frame):
         # Поиск контуров на изображении
         countours = cv.findContours(tresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
         countours = countours[1]
-
         # ib
         height,width=tresh.shape
         min_x, min_y = width, height
